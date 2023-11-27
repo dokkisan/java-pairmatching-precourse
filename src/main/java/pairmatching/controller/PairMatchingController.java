@@ -1,5 +1,7 @@
 package pairmatching.controller;
 
+import java.util.List;
+
 import pairmatching.domain.Feature;
 import pairmatching.message.ErrorMessage;
 import pairmatching.message.OperationMessage;
@@ -17,25 +19,37 @@ public class PairMatchingController {
 
     public void run() {
         Feature selectedFeature = getSelectedFeature();
+        List<String> matchingInfo = getMatchingInfo();
     }
 
     private Feature getSelectedFeature() {
         outputView.printMessage(OperationMessage.SELECT_FEATURE.getMessage());
         outputView.printSelectableFunction();
 
-        String inputKey = inputView.inputSelectedFeature();
-        for (Feature feature : Feature.getAllFeatures()) {
-            if (feature.getHotKey().equals(inputKey)) {
-                return feature;
+        while (true) {
+            try {
+                String inputKey = inputView.inputSelectedFeature();
+                for (Feature feature : Feature.getAllFeatures()) {
+                    if (!feature.getHotKey().equals(inputKey)) {
+                        throw new IllegalArgumentException(ErrorMessage.INVALID_HOT_KEY.getMessage());
+                    }
+                    return feature.getFeatureByHotKey(feature.getHotKey());
+                }
+            } catch (IllegalArgumentException e) {
+                outputView.printMessage(e.getMessage());
             }
         }
-
-        throw new IllegalArgumentException(ErrorMessage.MATCH_HISTORY_NOT_FOUND.getMessage());
     }
 
-//    private void getMatchingInfo() {
-//        outputView.printMessage(OperationMessage.INFO_OF_COURSE_AND_MISSION.getMessage());
-//        outputView.printMessage(OperationMessage.SELECT_COURSE_LEVEL_MISSION.getMessage());
-//        inputView.
-//    }
+   private List<String> getMatchingInfo() {
+       outputView.printMessage(OperationMessage.INFO_OF_COURSE_AND_MISSION.getMessage());
+       outputView.printMessage(OperationMessage.SELECT_COURSE_LEVEL_MISSION.getMessage());
+       while (true) {
+           try {
+               return inputView.inputPairMatchingInfo();
+           } catch (IllegalArgumentException e) {
+               outputView.printMessage(e.getMessage());
+           }
+       }
+   }
 }

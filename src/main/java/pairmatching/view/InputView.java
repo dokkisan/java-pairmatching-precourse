@@ -12,14 +12,14 @@ public class InputView {
         return Console.readLine();
     }
 
-    public List<String> inputMatchinglInfo() {
+    public List<String> inputPairMatchingInfo() {
         return validateSeparator(Console.readLine());
     }
 
     private List<String> validateSeparator(String input) {
         final String SEPARATOR = ",";
 
-        return Arrays.stream(input.split(","))
+        return Arrays.stream(input.split(SEPARATOR))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }

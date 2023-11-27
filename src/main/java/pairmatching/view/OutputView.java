@@ -13,7 +13,6 @@ public class OutputView {
         for (Feature feature : Feature.getAllFeatures()) {
             System.out.println(feature.getHotKey() + SEPARATOR + feature.getName());
         }
-        printBlankLine();
     }
 
     public void printBlankLine() {

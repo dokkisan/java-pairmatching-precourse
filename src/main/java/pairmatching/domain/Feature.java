@@ -1,5 +1,7 @@
 package pairmatching.domain;
 
+import pairmatching.message.ErrorMessage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +21,15 @@ public enum Feature {
 
     public static List<Feature> getAllFeatures() {
         return Arrays.asList(Feature.values());
+    }
+
+    public Feature getFeatureByHotKey(String hotKey) {
+        for (Feature feature : Feature.values()) {
+            if (feature.getHotKey().equals(hotKey)) {
+                return feature;
+            }
+        }
+        throw new IllegalArgumentException(ErrorMessage.INVALID_HOT_KEY.getMessage());
     }
 
     public String getHotKey() {
