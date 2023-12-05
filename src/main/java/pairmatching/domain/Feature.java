@@ -23,7 +23,7 @@ public enum Feature {
         return Arrays.asList(Feature.values());
     }
 
-    public Feature getFeatureByHotKey(String hotKey) {
+    public static Feature getFeatureByHotKey(String hotKey) {
         for (Feature feature : Feature.values()) {
             if (feature.getHotKey().equals(hotKey)) {
                 return feature;
